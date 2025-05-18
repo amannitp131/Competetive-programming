@@ -1,9 +1,5 @@
-
-
-
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long int ll;
 
 #define fast()                            \
     {                                     \
@@ -12,35 +8,35 @@ typedef long long int ll;
         cout.tie(0);                      \
     }
 
-const int MAXN = 100005;
-vector<int> adj[MAXN];   
-bool visited[MAXN];      
+const int MAXN = 200005;
+vector<int> adj[MAXN];
+vector<int> sub(MAXN); 
 
-void dfs(int u){
-    visited[u]=true;
-    for(int v: adj[u]){
-        if(!visited[v]){
-            dfs(v);
-        }
+void dfs(int u) {
+    sub[u] = 0;
+    for (int v : adj[u]) {
+        dfs(v);
+        sub[u] += 1 + sub[v];
     }
 }
 
-
-
 void solve() {
-   
-   
+    int n;
+    cin >> n;
+    for (int i = 0; i < n - 1; i++) {
+        int boss;
+        cin >> boss;
+        adj[boss].push_back(i + 2);
+    }
+    dfs(1);
+    for (int i = 1; i <= n; i++) {
+        cout << sub[i] << " ";
+    }
+    cout << endl;
 }
-
-
-
 
 int main() {
     fast();
-    int t;
-    t=1;
-    while (t--) {
-        solve();
-    }
+    solve();
     return 0;
 }
